@@ -100,7 +100,7 @@ public class RegistrationForm extends Application {
         // Add Button
         addButton = new Button("Add");
         addButton.setDisable(true); // Initially disable the button
-        addButton.setStyle("-fx-background-color: #2465d8; -fx-text-fill: white;");
+        addButton.setStyle("-fx-background-color: #1e53b1; -fx-text-fill: white;");
         addButton.setOnAction(event -> navigateToNewUI(primaryStage));
         grid.add(addButton, 1, 12);
 
@@ -147,26 +147,24 @@ public class RegistrationForm extends Application {
     }
 
     /**
-     * Validates the first name field, displaying an error message if it doesn't meet
-     * the length requirements of 2-25 characters.
+     * Validates the first name field, ensuring it is 2-25 alphabetic characters.
      */
     private void validateFirstName() {
         String firstName = firstNameField.getText();
-        if (firstName.length() < 2 || firstName.length() > 25) {
-            firstNameError.setText("Must be 2-25 characters long.");
+        if (!firstName.matches("[a-zA-Z]{2,25}")) {
+            firstNameError.setText("Must be 2-25 alphabetic characters.");
         } else {
             firstNameError.setText("");
         }
     }
 
     /**
-     * Validates the last name field, displaying an error message if it doesn't meet
-     * the length requirements of 2-25 characters.
+     * Validates the last name field, ensuring it is 2-25 alphabetic characters.
      */
     private void validateLastName() {
         String lastName = lastNameField.getText();
-        if (lastName.length() < 2 || lastName.length() > 25) {
-            lastNameError.setText("Must be 2-25 characters long.");
+        if (!lastName.matches("[a-zA-Z]{2,25}")) {
+            lastNameError.setText("Must be 2-25 alphabetic characters.");
         } else {
             lastNameError.setText("");
         }
