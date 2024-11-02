@@ -12,11 +12,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * RegistrationForm is a JavaFX application that displays a registration form
+ * with input fields for first name, last name, email, date of birth, and zip code.
+ * The form includes validation for each input and enables an "Add" button only
+ * when all fields are valid.
+ */
 public class RegistrationForm extends Application {
     private TextField firstNameField, lastNameField, emailField, dobField, zipField;
     private Button addButton;
     private Label firstNameError, lastNameError, emailError, dobError, zipError;
 
+    /**
+     * The start method sets up the UI components and layout for the registration form.
+     *
+     * @param primaryStage the main stage for this JavaFX application
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Registration Form");
@@ -31,9 +42,9 @@ public class RegistrationForm extends Application {
         // Registration Form Title
         Label titleLabel = new Label("Registration Form");
         titleLabel.setFont(new Font("Arial", 20));
-        titleLabel.setStyle("-fx-background-color: #373636; -fx-text-fill: white;");
         grid.add(titleLabel, 0, 0, 2, 1);
 
+        // Default Profile Picture
         String profileImagePath = "file:/C:/Users/mahsa/Desktop/Fall 2024/CSC311-AP/CSC311Week9RegEx/profile.png";
         Image profileImage = new Image(profileImagePath);
         ImageView profileImageView = new ImageView(profileImage);
@@ -86,15 +97,18 @@ public class RegistrationForm extends Application {
         grid.add(zipField, 1, 10);
         grid.add(zipError, 1, 11);
 
-        // Add Button (Red Color)
+        // Add Button
         addButton = new Button("Add");
-        addButton.setStyle("-fx-background-color: #0059ff; -fx-text-fill: white;");
-        addButton.setDisable(true);
+        addButton.setDisable(true); // Initially disable the button
+        addButton.setStyle("-fx-background-color: #2465d8; -fx-text-fill: white;");
         addButton.setOnAction(event -> navigateToNewUI(primaryStage));
         grid.add(addButton, 1, 12);
 
         // Validate each field when focus changes
         validateFields();
+
+        // Explicitly call enableAddButton to check initial state of the fields
+        enableAddButton();
 
         // Scene setup with grid layout
         Scene scene = new Scene(grid, 400, 600);
@@ -102,6 +116,9 @@ public class RegistrationForm extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Sets up listeners to validate each input field when the focus changes.
+     */
     private void validateFields() {
         firstNameField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) validateFirstName();
@@ -129,6 +146,10 @@ public class RegistrationForm extends Application {
         });
     }
 
+    /**
+     * Validates the first name field, displaying an error message if it doesn't meet
+     * the length requirements of 2-25 characters.
+     */
     private void validateFirstName() {
         String firstName = firstNameField.getText();
         if (firstName.length() < 2 || firstName.length() > 25) {
@@ -138,6 +159,10 @@ public class RegistrationForm extends Application {
         }
     }
 
+    /**
+     * Validates the last name field, displaying an error message if it doesn't meet
+     * the length requirements of 2-25 characters.
+     */
     private void validateLastName() {
         String lastName = lastNameField.getText();
         if (lastName.length() < 2 || lastName.length() > 25) {
@@ -147,6 +172,9 @@ public class RegistrationForm extends Application {
         }
     }
 
+    /**
+     * Validates the email field to ensure it follows the required Farmingdale email format.
+     */
     private void validateEmail() {
         String email = emailField.getText();
         if (!email.matches("^[\\w-.]+@farmingdale\\.edu$")) {
@@ -156,6 +184,9 @@ public class RegistrationForm extends Application {
         }
     }
 
+    /**
+     * Validates the date of birth field to ensure it follows the MM/DD/YYYY format.
+     */
     private void validateDob() {
         String dob = dobField.getText();
         if (!dob.matches("^(0[1-9]|1[0-2])/(0[1-9]|[12]\\d|3[01])/\\d{4}$")) {
@@ -165,6 +196,9 @@ public class RegistrationForm extends Application {
         }
     }
 
+    /**
+     * Validates the zip code field to ensure it is a 5-digit number.
+     */
     private void validateZip() {
         String zip = zipField.getText();
         if (!zip.matches("\\d{5}")) {
@@ -174,6 +208,9 @@ public class RegistrationForm extends Application {
         }
     }
 
+    /**
+     * Enables or disables the "Add" button based on the presence of any error messages.
+     */
     private void enableAddButton() {
         addButton.setDisable(
                 firstNameError.getText().length() > 0 ||
@@ -184,6 +221,11 @@ public class RegistrationForm extends Application {
         );
     }
 
+    /**
+     * Navigates to a new UI scene displaying a success message upon successful registration.
+     *
+     * @param primaryStage the main stage for this JavaFX application
+     */
     private void navigateToNewUI(Stage primaryStage) {
         Label successLabel = new Label("Registration Successful!");
         successLabel.setFont(new Font("Arial", 20));
@@ -196,6 +238,11 @@ public class RegistrationForm extends Application {
         primaryStage.setScene(newScene);
     }
 
+    /**
+     * Main method to launch the JavaFX application.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
